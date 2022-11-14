@@ -13,3 +13,39 @@
 .set DAC_05_04, 0x01D4
 .set DAC_07_06, 0x01D6
 .set DAC_09_08, 0x01D8
+
+
+main:
+    mov     #DMEM_250, r1           ; Initialize stack pointer
+    mov	#0x0010, &BCSCTL2	; Divide clock 20MHz
+	mov	#0x5A80, &WDTCTL	; Disbles the watchdog timer by setting WDTHOLD=1 
+	mov     #0x0064, &GP_PER_1      ; sel_avd_25 = On, IVDD to 2.5V, Set vtun_ext = On
+	mov	#0x0002, &TUN_MUX
+ 	mov     #0, &ROW_SEL
+    mov     #0, &COL_SEL
+	mov	#0x0000, &GATE_S	; gate_s = 0.6V (@ IVDD 2.5V)
+	mov	#0x0000, &GATE_US_P	; gate_us_p = 0.6V (@ IVDD 2.5V)
+	mov	#0x0040, &GATE_US_N	; gate_us_n = gnd (@ IVDD 2.5V)
+	mov     #0x3F04, &GP_PER_3      ; Vtun_ext = 5V, enable 6V, esd=6v, dvdd2.5=On, loc_dreset=1,
+    mov     #1, r5             	; Number of ms
+    mov     #0x1F04, &GP_PER_3      ; Vtun_ext = 5V, enable 6V, esd=6v, dvdd2.5=On, loc_dreset=0,
+	mov	#0x00A4, &DRAIN_CTRL	; 101 cascode off, no use DAC, i2v mux control=fg_inn
+	mov     #0x0000, &PROG_BITS     ; PROG = 0, OV_N = don't care, MEAS_ADC = 0, CLEAR_N = 0
+
+mov #0x0000, r2
+mov #0x6000, r7
+clr r6
+mov	#0x4300, r11
+mov	@r11, r12		; length of vector 
+incd	r11
+mov	@r11, r13		; DAC information
+incd	r11
+mov	@r11, r14		; Time interval (ms)
+mov #0x0001, &GP_PER_2
+
+;------------------------------------------------------
+wait_startup:
+mov #0xFFFF, r5 
+call #wait_10us
+mov #0x8000, &GP_PER_4
+clr r6
