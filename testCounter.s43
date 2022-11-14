@@ -49,3 +49,15 @@ mov #0xFFFF, r5
 call #wait_10us
 mov #0x8000, &GP_PER_4
 clr r6
+
+
+
+wait_10us:
+        mov     #34, r4                 ; Number of clock cycles in 100 us (3324 was divided by 100)
+wait_10us_loop:
+        dec.w   r4                      ; Subtract from number of clk cycles.Execution takes 2 clock cycles
+        jnz     wait_10us_loop          ; Test for loop termination. Execution takes 2 clock cycles
+        mov     #34, r4                  ; Reset number of clock cycles
+        dec.w   r5                      ; Decrement number of ms total
+        jnz     wait_10us_loop          ; Keep looping if necessary
+        ret   
