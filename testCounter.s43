@@ -1,0 +1,15 @@
+.include "pmem_defs.asm"
+	
+.global main
+
+;Set the dac values:
+
+.set GP_array_to_proc, 0x017E
+.set mem, 0x5200
+.set mem1, 0x5000
+.set mem2, 0x6004
+.set DAC_01_00, 0x01D0
+.set DAC_03_02, 0x01D2
+.set DAC_05_04, 0x01D4
+.set DAC_07_06, 0x01D6
+.set DAC_09_08, 0x01D8
