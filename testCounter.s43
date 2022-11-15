@@ -53,8 +53,8 @@ clr r6
 
 /*------------------------ Counter loop -----------------*/
 
-mov #0x0000, r3
-mov #0x0FFF, r8
+mov #0x0000, r3 ;0 value into r3
+mov #0x0FFF, r8 
 count_loop:
     clrz
     cmp r8, r3
