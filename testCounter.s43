@@ -53,15 +53,16 @@ clr r6
 
 /*------------------------ Counter loop -----------------*/
 
-mov #0x0000, r3 ;0 value into r3
+mov #0x0000, r10 ;0 value into r10
 mov #0x0FFF, r8 
 count_loop:
     clrz
-    cmp r8, r3
+    cmp r8, r10
     jeq End_loop
-    inc r3
+    inc r10
     jmp count_loop
 End_loop:
+    mov r10, #0x1000
     call end_of_test
 /* ----------------------    FUNCTIONS    --------------- */
 end_of_test:	
