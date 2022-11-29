@@ -58,7 +58,7 @@ reti
 
 
 IRQ_06_ROUTINE:
-mov #0xFFEA, r8 ; Store Vector address
+mov #0xFFEC, r8 ; Store Vector address
 mov r2, r9      ; Save Status register
 mov r1, r10     ; Save Stack Pointer
 reti
