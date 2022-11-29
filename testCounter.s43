@@ -62,7 +62,7 @@ count_loop:
     inc r10
     jmp count_loop
 End_loop:
-    mov r10, #0x1000
+    mov r10, &0x1000
     call end_of_test
 /* ----------------------    FUNCTIONS    --------------- */
 end_of_test:	
