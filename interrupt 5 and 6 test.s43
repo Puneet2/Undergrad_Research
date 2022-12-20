@@ -32,6 +32,7 @@ main:
 	mov	#0x00A4, &DRAIN_CTRL	; 101 cascode off, no use DAC, i2v mux control=fg_inn
 	mov     #0x0000, &PROG_BITS     ; PROG = 0, OV_N = don't care, MEAS_ADC = 0, CLEAR_N = 0
 
+mov #0x0000, r4 ;counter for IV 5 and IV 6
 mov #0x0000, r2 
 mov #0x6000, r7
 clr r6
@@ -54,6 +55,9 @@ IRQ_05_ROUTINE:
 mov #0xFFEA, r8 ; Store vector address
 mov r2, r9      ; Save Status register
 mov r1, r10     ; Save Stack Pointer
+mov #mem1, r4  	; grab counter value
+inc r4          ; inc counter
+mov r4, &mem1	; store back in mem
 reti
 
 
@@ -61,6 +65,9 @@ IRQ_06_ROUTINE:
 mov #0xFFEC, r8 ; Store Vector address
 mov r2, r9      ; Save Status register
 mov r1, r10     ; Save Stack Pointer
+mov #mem2, r4  	; grab counter value
+inc r4          ; inc counter
+mov r4, &mem2	; store back in mem
 reti
 
 
